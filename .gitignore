@@ -1,0 +1,15 @@
+# 本地敏感配置与密钥（绝对禁止提交到公开代码仓库）
+wos_secrets.local.json
+*.secret
+.env
+.env.*
+
+# Python 运行时缓存
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 临时与备份文件
+old/
+*.bak
+*.tmp

@@ -1,0 +1,11 @@
+# 王小治课题组 · ESI 高被引论文清单 (ESI Highly Cited Papers)
+# 每行一个 DOI 或标题，系统将自动点亮【🔥 ESI高被引】微标
+# 例如：
+# 10.1016/j.jhazmat.2019.03.080
+Photocatalysis toward Microplastics Conversion: A Critical Review
+Stacking Engineering of Heterojunctions in Half-Metallic Carbon Nitride for Efficient CO2 Photoreduction
+Snowflake-Like Cu2S/MoS2/Pt heterostructure with near infrared photothermal-enhanced electrocatalytic and photoelectrocatalytic hydrogen production
+Carbon defects in biochar facilitated nitrogen doping: The significant role of pyridinic nitrogen in peroxymonosulfate activation and ciprofloxacin degradation
+Oxygen vacancies induced narrow band gap of BiOCl for efficient visible-light catalytic performance from double radicals
+Variable dimensional structure and interface design of g-C3N4/BiOI composites with oxygen vacancy for improving visible-light photocatalytic properties
+Biochar-supported nZVI (nZVI/BC) for contaminant removal from soil and water: A critical review

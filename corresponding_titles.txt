@@ -1,0 +1,120 @@
+# 王小治课题组 · 官方通讯作者论文标题库 (Corresponding Author Titles)
+# 每行一个英文标题，系统采用去标点与大小写归一化高容错匹配算法
+# 匹配命中的论文将自动在成果卡片上点亮【通讯作者】微标
+Partial Phase Transition to Construct Amorphous-Crystalline Heterophase Catalyst for Enhanced CO2 Photoreduction
+Triple-Network Biopolyester Elastomer Composites for Tailorable Shape-Shifting Performances in Response to Multiple Stimulus
+Hydrothermal temperature-regulated interface effects in Ce@Mn core-shell catalysts for efficient formaldehyde removal
+Highly dispersed kelp-derived carbon dots for peroxydisulfate activation towards efficient degradation of tetracycline
+Climate-Smart Remediation: Selenium-Biochar Dual Functionality Reduces Mercury Toxicity and Improves Selenium Biofortification in Garlic under Future CO2 Scenarios
+Synthesis of carbon nitride in-situ coupled tungsten oxide heterojunction with efficient photocatalytic redox properties
+Transgenerational effects of silver nanoparticles in soil to earthworms (Eisenia fetida)☆
+Multigenerational growth inhibition and oxidative stress of polystyrene micro(nano)plastics on earthworms (Eisenia fetida)
+Microbial life strategies in grass-legume intercropping with pear: implications for soil carbon and nitrogen management
+Elevated CO2 Modulates Selenium Bioaccumulation in Garlic (Allium sativum L.): Contrasting Effects of Biochar and Phosphate Fertilizer Amendments
+Mass Balance-Based Inventory of Heavy Metal Inputs and Outputs of Agricultural Soils in a Rice-Wheat Rotation Area, China: A Two-Year Field Experiment
+Anion-Selective Redox COF with Antidissolution and Antifouling Electrochemical Performance for Membrane-Free Desalination Battery
+Controlled Photocatalytic Reduction of CO2 by Precise Atomic-Level Interface Modification and Engineering of Silver Nanoclusters
+Crab Shell Biochar and Compost Synergistically Mitigate Heavy Metal Toxicity in Soil-Plant System
+Passivation Remediation of Cd-Contaminated Farmland in Yongkang, China by CaAl-LDH: A Mechanism and Application Study
+Electronic Structure Reconfiguration of Zn-NxB4-x Sites for Enhanced Fenton-Like Catalysis
+Transforming Waste Biomass into N-Rich Carbon Dots with Built-In Active Sites for Efficient CO2 Photoreduction from Flue Gas
+Grass-legume mixture optimizes soil new carbon sequestration by leveraging microbial necromass dynamics in a pear orchard
+Engineering Spin State of Atomic Iron Centers for High-Performance Photocatalytic Nitrogen Fixation
+Dual-patterned programming of photoactive dynamically cross-linked polyester enabling customizable shape-shifting pathways
+Successive organic fertilizer substitution alleviated net ecosystem carbon loss in new vegetable field converted from rice paddy
+Microwave assisted synthesis of V-doped Co3O4/g-C3N4 heterostructure for simultaneous electrochemical detection of ascorbic acid and Dopamine
+Self-anchored nickel cocatalyst on nitrogen-doped carbon dots for enhanced photocatalytic hydrogen evolution
+Microbial mechanism and CO2 emission from coastal saline soil: The role of corn stover and nutrient additions
+Enhanced removal of lead complexes using phosphide-modified nanoscale zero-valent iron: The boosting impact of the iron cycle
+Tailoring Single Co-N4 Sites Within the Second Coordination Shell for Enhanced Natural Light-Driven Photosynthetic H2O2 Production
+Oxygen Vacancy Modification MIL-125(Ti) Promotes CO2 Photoreduction to CO with Near 100% Selectivity
+Synthesis of carbon nitride in-situ coupled tungsten oxide heterojunction with efficient photocatalytic redox properties (Publication with Expression of Concern. See vol. 255, 2025)
+Effects of Biochar on the Availability of Trace Elements in Different Types of Soil
+Incorporation of NiO on attapulgite supported Au catalyst for HCHO removal at low temperature
+Synergistic cooperation between metal and non-metallic sites enhances PDS molecule compatibility for electron-rich pollutants removal
+Rational reconstruction from attapulgite to MCM-41 and its superior application in formaldehyde degradation
+Rapid synthesis of ultra-thin square BiOCl nanoplates for efficient photodegradation of pollutants
+Straw and Biochar Amendments Over a Decade Differently Modulates Denitrification Gas Products
+Coupled iron oxides and microbial-mediated soil organic carbon stabilization across tea plantation chronosequences
+Hydrogen production using g-C3N4 based photocatalysts: A review
+Enhanced CO2 photoreduction in pure water systems by surface-reconstructed asymmetric Mn-Cu sites
+Boron doped g-C3N4 porous nanosheets to increase electron-hole pair generation for excellent photocatalytic H2 production and CO2 reduction
+Bimetallic NiCu catalyst derived from spent MOF adsorbent for efficient photocatalytic CO2 2 reduction
+Breaking the intrinsic activity barriers of bilayer metal oxides for catalytic CO2 reduction
+Engineering ultra-low density and fully exposed atomic cobalt sites for antibiotics removal
+Patterns and determinants of microbial- and plant-derived carbon contributions to soil organic carbon in tea plantation chronosequence (May, 10.1007/s11104-024-06712-9, 2024)
+Selenium doping to improve internal electric field for excellent photocatalytic efficiency of g-C3N4 nanosheets
+Photocatalysis toward Microplastics Conversion: A Critical Review
+Patterns and determinants of microbial- and plant-derived carbon contributions to soil organic carbon in tea plantation chronosequence
+Precise Modulation of the Coordination Environment of Single Cu Site Catalysts to Regulate the Peroxymonosulfate Activation Pathway for Water Remediation
+Structurally disordered MoSe 2 with rich 1T phase as a universal platform for enhanced photocatalytic hydrogen production
+Recyclable thiol-modified Zr-based MOFs/hydrogel composite beads for effective removal of Hg (II)
+Faradaic Rectification in Electrochemical Deionization and Its Influence on Cyclic Stability
+Rational regulation of the electronic structure of Cu1 sites catalyst to modulate persulphate activation pathway
+Dimension dependent photocatalysis over Znln2S4: Controllable synthesis and catalytic mechanism insight
+Stacking Engineering of Heterojunctions in Half-Metallic Carbon Nitride for Efficient CO2 Photoreduction
+Remarkably enhanced hydrogen evolution of g-C3N4 nanosheet under simulated sunlight via AgPt alloy co-catalyst with low amount of Pt
+Highly selective photocatalytic CO2 reduction by metal-N4 dynamically generated from atomically dispersed copper
+Piezo-photocatalysis for efficient charge separation to promote CO2 photoreduction in nanoclusters
+Tofukasu-derived biochar with interconnected and hierarchical pores for high efficient removal of Cr (VI)
+Sulfide-modified nanozerovalent iron for rapid decontamination of Cu(II) in wastewater
+Effect of interconnected mesoporous structure on HCHO catalytic oxidation over transition metal doped Ag/MCM-41
+Crystal phase of nickel sulfide dictates hydrogen evolution activity of various semiconducting photocatalysts
+Unraveling the role of phase engineering in tuning photocatalytic hydrogen evolution activity and stability
+Effect of Rape-Straw-Derived Biochar on the Adsorption Properties of Single and Complex Trace Elements
+Assessing the Efficiency and Mechanism of Copper Adsorption onto Biochars derived from Corn Straw and Cow Manure
+Recent Advances in Phase-Engineered Photocatalysts: Classification and Diversified Applications
+Synergic effect among activated carbon/sulphur-assisted graphitic carbon nitride for enhanced photocatalytic activity
+Selective Catalytic Hydrodechlorination of 1,2-Dichloroethane to Ethylene over Ni-Rh Nanoparticle Catalysts Supported on γ-Al2O3
+Investigation of transition metal-doped graphitic carbon nitride for MO dye degradation
+Unraveling the unique role of brown graphitic carbon nitride in robust CO2 photoreduction
+Solvent-induced facile synthesis of MnFe2O4 and the As(V) removal mechanism study
+Conditional remediation performance of wheat straw biochar on three typical Cd-contaminated soils
+Synchronous synthesis of S-doped carbon nitride/nickel sulfide photocatalysts for efficient dye degradation and hydrogen evolution
+Elevated CO2 and biochar differentially affect plant C:N:P stoichiometry and soil microbiota in the rhizosphere of white lupin (Lupinus albus L.)
+Bimetallic Au-Ag catalysts in HCHO catalytic oxidation: No synergetic effect?
+Phase Control of Cobalt Selenide: Unraveling the Relationship Between Phase Property and Hydrogen Evolution Catalysis
+Long-Term Field Biochar Application for Rice Production: Effects on Soil Nutrient Supply, Carbon Sequestration, Crop Yield and Grain Minerals
+Enhanced Cr(vi) removal by hierarchical CoFe2O4@SiO2-NH2via reduction and adsorption processes
+Diverse morphological study for nonmetal-doped g-C3N4 composites with narrow bandgap for improved photocatalytic activity
+Snowflake-Like Cu2S/MoS2/Pt heterostructure with near infrared photothermal-enhanced electrocatalytic and photoelectrocatalytic hydrogen production
+Recent advances in BiOX-based photocatalysts to enhanced efficiency for energy and environment applications
+Does biochar application in heavy metal-contaminated soils affect soil micronutrient dynamics
+Effects of temperature on physicochemical properties of rice straw biochar and its passivation ability to Cu2+ in soil
+Switching charge transfer of g-C3N 4/BiVO 4 heterojunction from type II to Z-scheme via interfacial vacancy engineering for improved photocatalysis
+Fast preparation of oxygen vacancy-rich 2D/2D bismuth oxyhalides-reduced graphene oxide composite with improved visible-light photocatalytic properties by solvent-free grinding
+High frequency ultrasonication enhances iron-catalyzed sulphate inactivation of Escherichia coli and Staphylococcus aureus
+The significant role of electron donating capacity and carbon structure of biochar to electron transfer of zerovalent iron
+Accelerating interlayer charge transport of alkali metal-intercalated carbon nitride for enhanced photocatalytic hydrogen evolution
+Mechanism analysis of MnFe2O4/FeSX for removal of Cr(VI) from aqueous phase
+Increased structural defects of graphene oxide compromised reductive capacity of ZVI towards hexavalent chromium
+Fine-tuning internal electric field of BiOBr for suppressed charge recombination
+Variable dimensional structure and interface design of g-C3N4/BiOI composites with oxygen vacancy for improving visible-light photocatalytic properties
+High removal efficiency of tetracycline (TC) by biochar-supported zerovalent iron composite prepared by co-pyrolysis of hematite and pinewood
+BiOCl/cattail carbon composites with hierarchical structure for enhanced photocatalytic activity
+Pinewood outperformed bamboo as feedstock to prepare biochar-supported zero-valent iron for Cr6+ reduction
+Preferential Nitrate Removal from Water Using a New Recyclable Polystyrene Adsorbent Functionalized with Triethylamine Groups
+Photocatalytic behavior of biochar-modified carbon nitride with enriched visible-light reactivity
+Narrowing the Band Gap of BiOCI for the Hydroxyl Radical Generation of Photocatalysis under Visible Light
+The chemical precipitation synthesis of nanorose-shaped Bi4O5I2 with highly visible light photocatalytic performance
+Biochar-supported nZVI (nZVI/BC) for contaminant removal from soil and water: A critical review
+Biomass facilitated phase transformation of natural hematite at high temperatures and sorption of Cd2+ and Cu2+
+Hierarchical porous biochar-based functional materials derived from biowaste for Pb(II) removal
+Adsorption and reduction of hexavalent chromium on magnetic greigite (Fe3S4)-CTAB: leading role of Fe(ii) and S(-ii)
+Preparation and application synthesis of magnetic nanocomposite using waste toner for the removal of Cr(VI)
+Magnetic Activated-ATP@ Fe3O4 Nanocomposite as an Efficient Fenton-Like Heterogeneous Catalyst for Degradation of Ethidium Bromide
+Elevated ozone level affects micronutrients bioavailability in soil and their concentrations in wheat tissues
+Simultaneous reductive and sorptive removal of Cr(VI) by activated carbon supported β-FeOOH
+Floating photocatalyst of B-N-TiO2/expanded perlite: a sol-gel synthesis with optimized mesoporous and high photocatalytic activity
+Synthesis of NanoTiO2/CTMAB -Expanded Perlite Applied to the Degradation of Methyl Orange
+Immobilization of nano-TiO2 on Expanded Perlite for Photocatalytic Degradation of Rhodamine B
+The impact of free-air CO2 enrichment (FACE) on microelements concentration in soil solution in the rice season (Retracted Article)
+Nitrogen cycling and losses under rice-wheat rotations with coated urea and urea in the Taihu Lake region
+Introducing a Smartphone Tele-Objective Structured Clinical Examination to Support High-Stakes Competency Decisions: A Quasi-Experimental Study and Curricular Implications
+Scenario-driven cooperative artificial bee colony algorithm for energy-efficient robust machine scheduling
+Low-temperature sintering of PLSZT-based antiferroelectric ceramics in reducing atmosphere for energy storage
+Modulatory ATP binding to the E2 state of maize plasma membrane H+-ATPase indicated by the kinetics of vanadate inhibition
+Synthesis of NanoTiO2/CTMAB -Expanded Perlite Applied to the Degradation of Methyl Orange
+Immobilization of nano-TiO2 on Expanded Perlite for Photocatalytic Degradation of Rhodamine B
+The impact of free-air CO2 enrichment (FACE) on microelements concentration in soil solution in the rice season (Retracted Article)
+Nitrogen cycling and losses under rice-wheat rotations with coated urea and urea in the Taihu Lake region
