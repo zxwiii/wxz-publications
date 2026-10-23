@@ -1,0 +1,52 @@
+name: 自动同步王小治课题组学术成果 (Sync WoS & Push to Gitee)
+
+on:
+  schedule:
+    # 每月 2 号与 16 号北京时间上午 10:00 (UTC 02:00) 自动定时触发
+    - cron: '0 2 2,16 * *'
+  workflow_dispatch: # 支持在 GitHub Actions 页面随时手动一键点击触发
+
+jobs:
+  update-publications:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出当前仓库代码
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 配置 Python 3.9 环境
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: 执行 WoS 双 Key 智能轮换拉取与清洗治理
+        env:
+          # 从 GitHub 仓库安全 Secrets 注入，绝无代码明文暴露风险
+          WOS_API_KEY_1: ${{ secrets.WOS_API_KEY_1 }}
+          WOS_API_KEY_2: ${{ secrets.WOS_API_KEY_2 }}
+          WOS_API_KEYS: ${{ secrets.WOS_API_KEYS }}
+          RESEARCHER_ID: "PDX-5463-2025"
+        run: |
+          python sync_wos.py
+          python build_preview.py
+
+      - name: 提交更新到 GitHub 仓库
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Sync Bot"
+          git add publications_data.js impact_data.js publications.json impact_metrics.json crossref_cache.json wos_fixed_metadata.json preview_all.html 凡科_模块1_学术影响力.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(data): 定期自动同步王小治课题组学术成果与引证数据 [skip ci]" && git push origin HEAD)
+
+      - name: 镜像推送至 Gitee (国内毫秒级极速 CDN)
+        env:
+          GITEE_USER: ${{ secrets.GITEE_USER }}
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+          GITEE_REPO: ${{ secrets.GITEE_REPO }}
+        run: |
+          if [ -n "$GITEE_TOKEN" ] && [ -n "$GITEE_USER" ] && [ -n "$GITEE_REPO" ]; then
+            git push --force "https://${GITEE_USER}:${GITEE_TOKEN}@gitee.com/${GITEE_USER}/${GITEE_REPO}.git" HEAD:master
+            echo "✓ 成功镜像推送至 Gitee master 分支！"
+          else
+            echo "ℹ 提示：未检测到 GITEE_TOKEN 密钥，跳过 Gitee 镜像推送（如需国内加速请在 Secrets 中配置）"
+          fi
