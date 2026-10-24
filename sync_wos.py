@@ -326,55 +326,67 @@ def classify_topics(title, keywords_list, journal):
     return matched if matched else ["光催化与环境材料"]
 
 def fetch_wos_documents_multi_key(api_keys):
-    """使用双 API Key 智能轮换与容错接力拉取全部 WoS 官方文献记录"""
+    """通过 Web of Science Starter API 全量拉取论文 (支持单页级多 Key 无缝故障转移、配额轮换与防截断校验)"""
     if not api_keys:
-        print("[警告] 未提供任何 WoS API Key，请配置环境变量 WOS_API_KEYS 或本地密钥文件！")
+        print("[警告] 未提供任何 WoS API Key，请配置环境变量 WOS_API_KEY / WOS_API_KEYS 或本地密钥文件！")
         return []
 
     keys_pool = api_keys.copy()
-    random.shuffle(keys_pool)
-    print(f"✓ 启用双 API Key 智能安全轮换架构，共载入 {len(keys_pool)} 组密钥")
+    print(f"✓ 启用双 API Key 智能故障转移与轮换池，共载入 {len(keys_pool)} 组密钥")
 
-    for key_idx, current_key in enumerate(keys_pool):
-        key_mask = current_key[:6] + "..." + current_key[-4:] if len(current_key) > 10 else "***"
-        print(f"  -> 尝试使用 Key [{key_idx+1}/{len(keys_pool)}] ({key_mask})...")
-        all_hits = []
-        page = 1
-        limit = 50
-        total_docs = 0
-        success = True
+    all_hits = []
+    page = 1
+    limit = 50
+    current_key_idx = 0
+    total_avail = 0
+    retries_on_page = 0
 
-        while True:
-            url = f"{BASE_URL}?q=AI%3D({urllib.parse.quote(RESEARCHER_ID)})&limit={limit}&page={page}&sortField=PY+D"
-            req = urllib.request.Request(url, headers={
-                "X-ApiKey": current_key,
-                "Accept": "application/json"
-            })
-            try:
-                with urllib.request.urlopen(req, timeout=25) as resp:
-                    data = json.loads(resp.read().decode('utf-8'))
-                    hits = data.get("hits", [])
-                    total_docs = data.get("metadata", {}).get("total", 0)
-                    if not hits:
-                        break
-                    all_hits.extend(hits)
-                    print(f"     已成功获取第 {page} 页 ({len(all_hits)} / {total_docs} 篇)...")
-                    if len(all_hits) >= total_docs:
-                        break
-                    page += 1
-                    time.sleep(0.2)
-            except Exception as e:
-                print(f"     [警告] Key [{key_idx+1}] 请求异常: {e}")
-                success = False
-                break
+    while True:
+        current_key = keys_pool[current_key_idx]
+        masked_key = current_key[:6] + "..." + current_key[-4:] if len(current_key) > 10 else "***"
+        url = f"{BASE_URL}?q=AI%3D({urllib.parse.quote(RESEARCHER_ID)})&limit={limit}&page={page}&sortField=PY+D"
+        req = urllib.request.Request(url, headers={
+            "X-ApiKey": current_key,
+            "Accept": "application/json"
+        })
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = json.loads(resp.read().decode('utf-8'))
+                hits = data.get("hits", [])
+                if not hits:
+                    break
+                all_hits.extend(hits)
+                total_avail = data.get("metadata", {}).get("total", 0)
+                print(f"  -> 已成功拉取第 {page} 页 (本页 {len(hits)} 篇，累计 {len(all_hits)}/{total_avail} 篇 | Key: {masked_key})")
+                retries_on_page = 0
+                if len(all_hits) >= total_avail:
+                    break
+                page += 1
+                time.sleep(0.5)
+        except urllib.error.HTTPError as he:
+            retries_on_page += 1
+            if he.code in [429, 403] and retries_on_page <= max(3, len(keys_pool) * 2):
+                if len(keys_pool) > 1:
+                    current_key_idx = (current_key_idx + 1) % len(keys_pool)
+                    print(f"[WoS API] 当前 Key ({masked_key}) 触发限额/限流 (HTTP {he.code})，自动无缝切换至备用 Key 重试第 {page} 页...")
+                else:
+                    print(f"[WoS API] 触发瞬时限流 (HTTP {he.code})，等待 2.5 秒后重试第 {page} 页 ({retries_on_page}/3)...")
+                time.sleep(2.5)
+                continue
+            print(f"[错误] 请求 WoS API 异常 (Page {page}, HTTP {he.code}): {he.reason}")
+            break
+        except Exception as e:
+            print(f"[错误] 请求 WoS API 异常 (Page {page}): {e}")
+            break
 
-        if success and all_hits:
-            print(f"✓ 成功通过 Key [{key_idx+1}] 获取全部 {len(all_hits)} 篇官方文献！")
-            return all_hits
+    # 实时完整性防截断校验：严防因 API 额度中途耗尽导致未拉全而覆盖原完整数据
+    if total_avail > 0 and len(all_hits) < total_avail:
+        print(f"[警告] 本次仅获取到 {len(all_hits)}/{total_avail} 篇文献（API 配额可能中途耗尽）。为严防截断覆盖线上完整数据，本次放弃写入线上 API 结果！")
+        return []
 
-        print(f"  [提示] Key [{key_idx+1}] 请求受限或未完成，自动接力切换下一个 Key...")
-
-    return []
+    if all_hits:
+        print(f"✓ WoS API 拉取完毕，共完整获取 {len(all_hits)} 篇官方文献记录！")
+    return all_hits
 
 def rebuild_from_local(selected_dois, selected_title_norms, esi_dois, esi_title_norms, corr_titles, fixed_meta, now_str):
     """当离线或网络异常时，从本地已有的 publications.json 快速重新打标并生成数据"""
