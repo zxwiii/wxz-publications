@@ -101,6 +101,11 @@ window.WXZ_IMPACT = {
       "count": 1
     },
     {
+      "abbr": "ACS Nano",
+      "name": "ACS Nano",
+      "count": 1
+    },
+    {
       "abbr": "Adv Sci",
       "name": "Advanced Science",
       "count": 2
@@ -113,7 +118,7 @@ window.WXZ_IMPACT = {
     {
       "abbr": "CEJ",
       "name": "Chemical Engineering Journal",
-      "count": 11
+      "count": 10
     },
     {
       "abbr": "JHM",

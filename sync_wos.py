@@ -47,18 +47,19 @@ IMPACT_JS_FILE = os.path.join(SCRIPT_DIR, "impact_data.js")
 PUBS_JSON_FILE = os.path.join(SCRIPT_DIR, "publications.json")
 PUBS_JS_FILE = os.path.join(SCRIPT_DIR, "publications_data.js")
 
-# 重点期刊规则（环境材料化工特色，按梯队严格匹配）
+# 重点期刊规则（环境材料化工特色，按梯队严格匹配；is_top=True 的旗舰期刊默认纳入代表作）
 TOP_JOURNALS_STRICT = [
-    {"abbr": "Angew", "pattern": r"angewandte\s+chemie", "name": "Angewandte Chemie International Edition", "weight": 100},
-    {"abbr": "EST", "pattern": r"environmental\s+science\s+&\s+technology", "exclude": r"\(china\)|china", "name": "Environmental Science & Technology", "weight": 90},
-    {"abbr": "WR", "pattern": r"water\s+research", "name": "Water Research", "weight": 80},
-    {"abbr": "Adv Sci", "pattern": r"advanced\s+science", "name": "Advanced Science", "weight": 70},
-    {"abbr": "ACB", "pattern": r"applied\s+catalysis\s+b", "name": "Applied Catalysis B: Environment and Energy", "weight": 60},
-    {"abbr": "CEJ", "pattern": r"chemical\s+engineering\s+journal", "name": "Chemical Engineering Journal", "weight": 50},
-    {"abbr": "JHM", "pattern": r"journal\s+of\s+hazardous\s+materials", "name": "Journal of Hazardous Materials", "weight": 40},
-    {"abbr": "ACS Catal", "pattern": r"acs\s+catalysis", "name": "ACS Catalysis", "weight": 35},
-    {"abbr": "Nano Energy", "pattern": r"nano\s+energy", "name": "Nano Energy", "weight": 30},
-    {"abbr": "Biochar", "pattern": r"\bbiochar\b", "name": "Biochar", "weight": 25}
+    {"abbr": "Angew", "pattern": r"angewandte\s+chemie", "name": "Angewandte Chemie International Edition", "weight": 100, "is_top": True},
+    {"abbr": "EST", "pattern": r"environmental\s+science\s+&\s+technology", "exclude": r"engineering|water|\(china\)|china|letters", "name": "Environmental Science & Technology", "weight": 95, "is_top": True},
+    {"abbr": "WR", "pattern": r"^water\s+research$", "name": "Water Research", "weight": 90, "is_top": True},
+    {"abbr": "ACS Nano", "pattern": r"^acs\s+nano$", "name": "ACS Nano", "weight": 85, "is_top": True},
+    {"abbr": "Adv Sci", "pattern": r"^advanced\s+science$", "name": "Advanced Science", "weight": 80, "is_top": True},
+    {"abbr": "ACB", "pattern": r"applied\s+catalysis\s+b", "name": "Applied Catalysis B: Environment and Energy", "weight": 70, "is_top": True},
+    {"abbr": "CEJ", "pattern": r"^chemical\s+engineering\s+journal$", "name": "Chemical Engineering Journal", "weight": 50, "is_top": False},
+    {"abbr": "JHM", "pattern": r"journal\s+of\s+hazardous\s+materials", "name": "Journal of Hazardous Materials", "weight": 40, "is_top": False},
+    {"abbr": "ACS Catal", "pattern": r"acs\s+catalysis", "name": "ACS Catalysis", "weight": 35, "is_top": False},
+    {"abbr": "Nano Energy", "pattern": r"nano\s+energy", "name": "Nano Energy", "weight": 30, "is_top": False},
+    {"abbr": "Biochar", "pattern": r"^biochar$", "name": "Biochar", "weight": 25, "is_top": False}
 ]
 
 # 课题组 6 大核心学术主题深度匹配规则（Title + authorKeywords + Source）
@@ -132,6 +133,15 @@ def normalize_title(t):
     t_clean = clean_html_tags(t)
     return re.sub(r"[^a-z0-9]", "", t_clean.lower())
 
+def clean_doi_str(raw_str):
+    """高容错清洗 DOI 字符串：去除 https://doi.org/ 前缀与多余空白"""
+    if not raw_str:
+        return ""
+    d = raw_str.strip().lower()
+    d = re.sub(r"^(https?://)?(dx\.)?doi\.org/", "", d)
+    d = re.sub(r"^doi\s*:\s*", "", d)
+    return d.strip(" /")
+
 def to_title_case(s):
     """转换为标准学术英文标题大小写"""
     if not s:
@@ -139,14 +149,50 @@ def to_title_case(s):
     s = s.strip()
     words = s.split()
     lowers = {'and', 'or', 'of', 'for', 'in', 'on', 'with', 'by', 'at', 'to', 'from', 'as', 'the', 'a', 'an'}
+    uppers = {'acs', 'rsc', 'febs', 'ieee', 'es&t', 'pnas', 'dna', 'rna', 'nmr', 'uv', '3d', '2d', 'ii', 'iii', 'iv', 'vi'}
     titled = []
     for i, w in enumerate(words):
         w_low = w.lower()
-        if i > 0 and w_low in lowers:
+        if w_low in uppers:
+            titled.append(w_low.upper())
+        elif i > 0 and w_low in lowers and i != len(words) - 1:
             titled.append(w_low)
+        elif "-" in w:
+            parts = [p.upper() if p.lower() in uppers else p.capitalize() for p in w.split("-")]
+            titled.append("-".join(parts))
         else:
             titled.append(w.capitalize())
     return " ".join(titled)
+
+def format_journal_name(raw_name):
+    """将期刊名格式化为国际标准学术期刊名称"""
+    if not raw_name:
+        return ""
+    cleaned = clean_html_tags(raw_name).strip()
+    low = cleaned.lower()
+    exact_map = {
+        "acs nano": "ACS Nano",
+        "acs catalysis": "ACS Catalysis",
+        "acs applied materials & interfaces": "ACS Applied Materials & Interfaces",
+        "acs applied nano materials": "ACS Applied Nano Materials",
+        "acs applied polymer materials": "ACS Applied Polymer Materials",
+        "acs es&t engineering": "ACS ES&T Engineering",
+        "acs es&t water": "ACS ES&T Water",
+        "acs sustainable chemistry & engineering": "ACS Sustainable Chemistry & Engineering",
+        "angewandte chemie-international edition": "Angewandte Chemie International Edition",
+        "angewandte chemie international edition": "Angewandte Chemie International Edition",
+        "applied catalysis b-environment and energy": "Applied Catalysis B: Environment and Energy",
+        "applied catalysis b: environment and energy": "Applied Catalysis B: Environment and Energy",
+        "applied catalysis b-environmental": "Applied Catalysis B: Environmental",
+        "journal of materials chemistry a": "Journal of Materials Chemistry A",
+        "journal of materials chemistry c": "Journal of Materials Chemistry C",
+        "rsc advances": "RSC Advances",
+        "febs journal": "FEBS Journal",
+        "science china-materials": "Science China Materials",
+    }
+    if low in exact_map:
+        return exact_map[low]
+    return to_title_case(cleaned)
 
 def load_text_lines(filepath):
     """读取文本行并自动剔除注释与空行"""
@@ -258,6 +304,15 @@ def update_fanke_module1_static(impact_data):
         with open(m1_file, "w", encoding="utf-8") as f:
             f.write(content)
         print(f"✓ 已自动同步更新凡科模块一静态指标: 代表作={feat_cnt}篇, ESI={esi_cnt}篇, 收录={pubs}篇")
+        
+        # 联动重新构建合一版文件
+        make_unified_script = os.path.join(SCRIPT_DIR, "make_unified_html.py")
+        if os.path.exists(make_unified_script):
+            try:
+                import subprocess
+                subprocess.run([sys.executable, make_unified_script], check=False)
+            except Exception:
+                pass
     except Exception as e:
         print(f"[提示] 同步凡科静态指标时跳过: {e}")
 
@@ -321,7 +376,7 @@ def fetch_wos_documents_multi_key(api_keys):
 
     return []
 
-def rebuild_from_local(selected_dois, esi_dois, esi_title_norms, corr_titles, fixed_meta, now_str):
+def rebuild_from_local(selected_dois, selected_title_norms, esi_dois, esi_title_norms, corr_titles, fixed_meta, now_str):
     """当离线或网络异常时，从本地已有的 publications.json 快速重新打标并生成数据"""
     if not os.path.exists(PUBS_JSON_FILE):
         print("[错误] 本地不存在 publications.json，无法进行离线构建！")
@@ -331,9 +386,27 @@ def rebuild_from_local(selected_dois, esi_dois, esi_title_norms, corr_titles, fi
         pubs = json.load(f)
 
     for p in pubs:
-        doi_lower = (p.get("doi") or "").lower().strip()
+        doi_lower = clean_doi_str(p.get("doi") or "")
         title_norm = normalize_title(p.get("title") or "")
-        p["is_featured"] = True if doi_lower in selected_dois else False
+        journal_clean = format_journal_name(p.get("journal") or "")
+        p["journal"] = journal_clean
+
+        top_j_info = None
+        for tj in TOP_JOURNALS_STRICT:
+            if re.search(tj["pattern"], journal_clean.lower()):
+                if "exclude" in tj and re.search(tj["exclude"], journal_clean.lower()):
+                    continue
+                top_j_info = tj
+                break
+        p["top_journal"] = top_j_info.get("abbr") if top_j_info else None
+        p["top_weight"] = top_j_info.get("weight", 0) if top_j_info else 0
+
+        is_feat = False
+        if (doi_lower and doi_lower in selected_dois) or (title_norm and title_norm in selected_title_norms):
+            is_feat = True
+        elif top_j_info and top_j_info.get("is_top"):
+            is_feat = True
+        p["is_featured"] = is_feat
 
         is_esi = False
         if doi_lower in esi_dois or (p.get("doi") and p.get("doi") in esi_dois):
@@ -468,16 +541,27 @@ def main():
         print("请在环境变量中设置 WOS_API_KEYS，或在本地配置 wos_secrets.local.json。")
         sys.exit(1)
 
-    # 2. 载入外部治理控制文件
-    selected_dois = set(d.lower().strip() for d in load_text_lines(SELECTED_FILE))
-    print(f"✓ 载入代表作清单: {len(selected_dois)} 篇")
+    # 2. 载入外部治理控制文件 (支持 DOI、带 https://doi.org/ 的链接，以及英文论文标题)
+    selected_raw_lines = load_text_lines(SELECTED_FILE)
+    selected_dois = set()
+    selected_title_norms = set()
+    for sl in selected_raw_lines:
+        cd = clean_doi_str(sl)
+        if cd.startswith("10."):
+            selected_dois.add(cd)
+        else:
+            nt = normalize_title(sl)
+            if nt:
+                selected_title_norms.add(nt)
+    print(f"✓ 载入代表作清单: {len(selected_raw_lines)} 条 (DOIs: {len(selected_dois)}, 标题: {len(selected_title_norms)})")
 
     esi_lines = load_text_lines(ESI_FILE)
     esi_dois = set()
     esi_title_norms = set()
     for l in esi_lines:
-        if l.startswith("10."):
-            esi_dois.add(l.lower().strip())
+        cd = clean_doi_str(l)
+        if cd.startswith("10."):
+            esi_dois.add(cd)
         else:
             esi_title_norms.add(normalize_title(l))
     print(f"✓ 载入 ESI 高被引清单: {len(esi_lines)} 篇 (DOIs: {len(esi_dois)}, 标题: {len(esi_title_norms)})")
@@ -485,7 +569,7 @@ def main():
     corr_titles = set(normalize_title(t) for t in load_text_lines(CORR_FILE))
     print(f"✓ 载入官方通讯作者标题库: {len(corr_titles)} 篇")
 
-    # 3. 载入本地缓存与固化元数据库 (自动清洗脏数据)
+    # 3. 载入本地缓存与固化元数据库 (自动清洗脏数据与规范期刊名)
     crossref_cache = {}
     if os.path.exists(CROSSREF_CACHE_FILE):
         try:
@@ -500,10 +584,13 @@ def main():
         try:
             with open(FIXED_CACHE_FILE, "r", encoding="utf-8") as f:
                 fixed_meta = json.load(f)
-            # 清洗历史固化数据中的脏页码
+            # 清洗历史固化数据中的脏页码与非标期刊大小写
             for k, v in fixed_meta.items():
-                if isinstance(v, dict) and "pages" in v:
-                    v["pages"] = parse_clean_pages(v.get("pages"))
+                if isinstance(v, dict):
+                    if "pages" in v:
+                        v["pages"] = parse_clean_pages(v.get("pages"))
+                    if "journal" in v:
+                        v["journal"] = format_journal_name(v.get("journal"))
             print(f"✓ 载入历史固化元数据库: {len(fixed_meta)} 条记录 (脏数据已清洗)")
         except Exception:
             fixed_meta = {}
@@ -514,7 +601,7 @@ def main():
 
     if not all_hits:
         print("[提示] 未能从 Clarivate WoS 在线拉取到数据 (可能因离线、网络代理或接口波动)")
-        if rebuild_from_local(selected_dois, esi_dois, esi_title_norms, corr_titles, fixed_meta, now_str):
+        if rebuild_from_local(selected_dois, selected_title_norms, esi_dois, esi_title_norms, corr_titles, fixed_meta, now_str):
             print("✓ 已顺利基于本地数据库重新应用最新代表作与成果标签完成更新！")
             return
         else:
@@ -603,7 +690,7 @@ def main():
         # 期刊与卷期页码清洗
         source_info = doc.get("source", {})
         journal_raw = source_info.get("sourceTitle", "")
-        journal_clean = to_title_case(clean_html_tags(journal_raw))
+        journal_clean = format_journal_name(journal_raw)
 
         pub_year = source_info.get("publishYear", 2026)
         try:
@@ -650,30 +737,6 @@ def main():
                     is_corresponding = True
                     break
 
-        # 重点期刊匹配
-        top_j_info = None
-        for tj in TOP_JOURNALS_STRICT:
-            if re.search(tj["pattern"], journal_clean.lower()):
-                if "exclude" in tj and re.search(tj["exclude"], journal_clean.lower()):
-                    continue
-                top_j_info = tj
-                break
-
-        # 代表作判定（严格由当前 selected_doi.txt 指定）
-        is_featured = (doi_lower in selected_dois) if doi_lower else False
-
-        # ESI 高被引判定（支持 DOI 和 标题归一化匹配）
-        is_esi = False
-        if doi_lower in esi_dois or (doi and doi in esi_dois):
-            is_esi = True
-        elif title_norm in esi_title_norms:
-            is_esi = True
-        else:
-            for et in esi_title_norms:
-                if len(et) > 20 and (et in title_norm or title_norm in et):
-                    is_esi = True
-                    break
-
         # 提取 WoS authorKeywords 深度分析主题
         wos_kws = doc.get("keywords", {}).get("authorKeywords", [])
 
@@ -688,7 +751,7 @@ def main():
             pub_id = fixed_item.get("id")
             title_clean = fixed_item.get("title", title_clean)
             authors_str = fixed_item.get("authors", authors_str)
-            journal_clean = fixed_item.get("journal", journal_clean)
+            journal_clean = format_journal_name(fixed_item.get("journal", journal_clean))
             vol = fixed_item.get("volume", vol)
             iss = fixed_item.get("issue", iss)
             pages_str = parse_clean_pages(fixed_item.get("pages"), source_info.get("articleNumber"))
@@ -699,6 +762,34 @@ def main():
             topics = classify_topics(title_clean, wos_kws, journal_clean)
             if fixed_item and isinstance(fixed_item, dict):
                 pub_id = fixed_item.get("id")
+
+        # 重点期刊匹配 (基于规范化后的 journal_clean)
+        top_j_info = None
+        for tj in TOP_JOURNALS_STRICT:
+            if re.search(tj["pattern"], journal_clean.lower()):
+                if "exclude" in tj and re.search(tj["exclude"], journal_clean.lower()):
+                    continue
+                top_j_info = tj
+                break
+
+        # 代表作判定：【旗舰顶刊自动识别 (is_top=True)】 + 【selected_doi.txt 手动指定 (DOI或标题)】双重并集
+        is_featured = False
+        if (doi_lower and doi_lower in selected_dois) or (title_norm and title_norm in selected_title_norms):
+            is_featured = True
+        elif top_j_info and top_j_info.get("is_top"):
+            is_featured = True
+
+        # ESI 高被引判定（支持 DOI 和 标题归一化匹配）
+        is_esi = False
+        if doi_lower in esi_dois or (doi and doi in esi_dois):
+            is_esi = True
+        elif title_norm in esi_title_norms:
+            is_esi = True
+        else:
+            for et in esi_title_norms:
+                if len(et) > 20 and (et in title_norm or title_norm in et):
+                    is_esi = True
+                    break
 
         # Crossref 补充缺失的卷期页码
         if (not vol or not pages_str) and doi:
