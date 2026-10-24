@@ -29,13 +29,19 @@ jobs:
           RESEARCHER_ID: "PDX-5463-2025"
         run: |
           python sync_wos.py
-          python build_preview.py
+          # 如果存在预览脚本则安全构建，不存在自动跳过
+          if [ -f "build_preview.py" ]; then
+            python build_preview.py || true
+          fi
 
       - name: 提交更新到 GitHub 仓库
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action Sync Bot"
-          git add publications_data.js impact_data.js publications.json impact_metrics.json crossref_cache.json wos_fixed_metadata.json preview_all.html 凡科_模块1_学术影响力.html
+          # 提交核心成果数据文件
+          git add publications_data.js impact_data.js publications.json impact_metrics.json crossref_cache.json wos_fixed_metadata.json
+          # 如果有 html 文件也一同加入
+          git add preview_all.html 凡科_模块*.html 2>/dev/null || true
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore(data): 定期自动同步王小治课题组学术成果与引证数据 [skip ci]" && git push origin HEAD)
 
       - name: 镜像推送至 Gitee (国内毫秒级极速 CDN)
@@ -45,8 +51,9 @@ jobs:
           GITEE_REPO: ${{ secrets.GITEE_REPO }}
         run: |
           if [ -n "$GITEE_TOKEN" ] && [ -n "$GITEE_USER" ] && [ -n "$GITEE_REPO" ]; then
-            git push --force "https://${GITEE_USER}:${GITEE_TOKEN}@gitee.com/${GITEE_USER}/${GITEE_REPO}.git" HEAD:master
-            echo "✓ 成功镜像推送至 Gitee master 分支！"
+            # 推送到 Gitee 对应分支 (支持 main 分支)
+            git push --force "https://${GITEE_USER}:${GITEE_TOKEN}@gitee.com/${GITEE_USER}/${GITEE_REPO}.git" HEAD:main
+            echo "✓ 成功镜像推送至 Gitee main 分支！"
           else
-            echo "ℹ 提示：未检测到 GITEE_TOKEN 密钥，跳过 Gitee 镜像推送（如需国内加速请在 Secrets 中配置）"
+            echo "ℹ 提示：未检测到完整 Gitee 配置，跳过镜像推送"
           fi
