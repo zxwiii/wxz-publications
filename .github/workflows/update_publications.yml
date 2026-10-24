@@ -1,4 +1,4 @@
-name: 自动同步王小治课题组学术成果 (Sync WoS & Push to Gitee)
+name: 自动同步王小治课题组学术成果 (Sync WoS & Mirror to Gitee)
 
 on:
   schedule:
@@ -6,33 +6,35 @@ on:
     - cron: '0 2 2,16 * *'
   workflow_dispatch: # 支持在 GitHub Actions 页面随时手动一键点击触发
 
-# 赋予 GitHub Actions 写回仓库内容的权限 (彻底解决 403 Permission denied 错误)
+# 赋予 GitHub Actions 写回仓库内容的权限 (解决 403 Permission denied 错误)
 permissions:
   contents: write
 
 jobs:
-  update-publications:
+  sync-and-mirror:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
-      - name: 检出当前仓库代码
-        uses: actions/checkout@v3
+      - name: 检出当前 GitHub 仓库代码
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: 配置 Python 3.9 环境
-        uses: actions/setup-python@v4
+      - name: 配置 Python 环境
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
-      - name: 执行 WoS 双 Key 智能轮换拉取与清洗治理
+      - name: 执行 Web of Science 双 Key 智能轮换拉取与防截断同步
         env:
-          # 从 GitHub 仓库安全 Secrets 注入，绝无代码明文暴露风险
+          # 从 GitHub 仓库安全 Secrets 注入，支持单变量逗号分隔或多变量
+          WOS_API_KEY: ${{ secrets.WOS_API_KEY }}
+          WOS_API_KEYS: ${{ secrets.WOS_API_KEYS }}
           WOS_API_KEY_1: ${{ secrets.WOS_API_KEY_1 }}
           WOS_API_KEY_2: ${{ secrets.WOS_API_KEY_2 }}
-          WOS_API_KEYS: ${{ secrets.WOS_API_KEYS }}
           RESEARCHER_ID: "PDX-5463-2025"
         run: |
           python sync_wos.py
@@ -40,25 +42,38 @@ jobs:
             python build_preview.py || true
           fi
 
-      - name: 提交更新到 GitHub 仓库
+      - name: 提交并推送更新至 GitHub 主仓库
+        id: git-push
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          # 暂存数据与核心文件
-          git add publications_data.js impact_data.js publications.json impact_metrics.json crossref_cache.json wos_fixed_metadata.json
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm --cached --ignore-unmatch wos_keys.json wos_secrets.local.json || true
+          git add publications.json publications_data.js impact_data.js impact_metrics.json wos_fixed_metadata.json crossref_cache.json corresponding_titles.txt selected_doi.txt esi_top_1_percent.txt
           git add preview_all.html 凡科_*.html 2>/dev/null || true
-          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(data): 定期自动同步王小治课题组学术成果与引证数据 [skip ci]" && git push origin HEAD)
+          if git diff --staged --quiet; then
+            echo "No changes detected. Everything is up to date."
+          else
+            git commit -m "Auto sync publications & impact metrics from Web of Science [skip ci]"
+            git push origin HEAD
+          fi
 
-      - name: 镜像推送至 Gitee (国内毫秒级极速 CDN)
+      - name: 镜像同步至 Gitee 双分支 (master & main)
         env:
           GITEE_USER: ${{ secrets.GITEE_USER }}
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
           GITEE_REPO: ${{ secrets.GITEE_REPO }}
         run: |
-          if [ -n "$GITEE_TOKEN" ] && [ -n "$GITEE_USER" ] && [ -n "$GITEE_REPO" ]; then
-            # 推送到 Gitee 对应分支 (支持 main 分支)
-            git push --force "https://${GITEE_USER}:${GITEE_TOKEN}@gitee.com/${GITEE_USER}/${GITEE_REPO}.git" HEAD:main
-            echo "✓ 成功镜像推送至 Gitee main 分支！"
+          if [ -n "$GITEE_USER" ] && [ -n "$GITEE_TOKEN" ]; then
+            REPO_NAME="${GITEE_REPO:-wxz-publications}"
+            echo "Mirroring repository to Gitee (${GITEE_USER}/${REPO_NAME})..."
+            git remote add gitee "https://${GITEE_USER}:${GITEE_TOKEN}@gitee.com/${GITEE_USER}/${REPO_NAME}.git" || true
+            git push -f gitee HEAD:master || true
+            git push -f gitee HEAD:main || echo "Gitee push completed"
           else
-            echo "ℹ 提示：未检测到完整 Gitee 配置，跳过镜像推送"
+            echo "未检测到 GITEE_USER / GITEE_TOKEN，跳过 Gitee 镜像推送"
           fi
+
+      - name: 实时刷新全球 jsDelivr CDN 缓存 (Purge Global CDN Cache)
+        run: |
+          curl -s "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/impact_data.js" || true
+          curl -s "https://purge.jsdelivr.net/gh/${{ github.repository }}@main/publications_data.js" || true
