@@ -15,7 +15,7 @@ window.WXZ_IMPACT = {
     "total_citations": 6689,
     "h_index": 44,
     "avg_citations_per_paper": 33.1,
-    "featured_count": 11,
+    "featured_count": 12,
     "esi_count": 7,
     "role_count": 113
   },

@@ -1040,7 +1040,7 @@ window.WXZ_PUBLICATIONS = [
     "pages": "12354-12365",
     "doi": "10.1021/acsnano.5c02303",
     "citations": 25,
-    "is_featured": false,
+    "is_featured": true,
     "is_esi": false,
     "is_first": false,
     "is_corresponding": true,
