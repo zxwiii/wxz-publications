@@ -6,13 +6,20 @@ on:
     - cron: '0 2 2,16 * *'
   workflow_dispatch: # 支持在 GitHub Actions 页面随时手动一键点击触发
 
+# 赋予 GitHub Actions 写回仓库内容的权限 (彻底解决 403 Permission denied 错误)
+permissions:
+  contents: write
+
 jobs:
   update-publications:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: 检出当前仓库代码
         uses: actions/checkout@v3
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
       - name: 配置 Python 3.9 环境
@@ -29,18 +36,16 @@ jobs:
           RESEARCHER_ID: "PDX-5463-2025"
         run: |
           python sync_wos.py
-          # 如果存在预览脚本则安全构建，不存在自动跳过
           if [ -f "build_preview.py" ]; then
             python build_preview.py || true
           fi
 
       - name: 提交更新到 GitHub 仓库
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action Sync Bot"
-          # 提交核心成果数据文件
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          # 暂存数据与核心文件
           git add publications_data.js impact_data.js publications.json impact_metrics.json crossref_cache.json wos_fixed_metadata.json
-          # 如果有 html 文件也一同加入
           git add preview_all.html 凡科_模块*.html 2>/dev/null || true
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore(data): 定期自动同步王小治课题组学术成果与引证数据 [skip ci]" && git push origin HEAD)
 
