@@ -2,8 +2,8 @@ name: 自动同步王小治课题组学术成果 (Sync WoS & Mirror to Gitee)
 
 on:
   schedule:
-    # 每月 2 号与 16 号北京时间上午 10:00 (UTC 02:00) 自动定时触发
-    - cron: '0 2 2,16 * *'
+    # 每天北京时间上午 3:00 (UTC 19:00) 自动定时触发
+    - cron: '0 19 * * *'
   workflow_dispatch: # 支持在 GitHub Actions 页面随时手动一键点击触发
 
 # 赋予 GitHub Actions 写回仓库内容的权限 (解决 403 Permission denied 错误)
