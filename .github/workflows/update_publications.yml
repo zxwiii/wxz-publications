@@ -46,7 +46,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           # 暂存数据与核心文件
           git add publications_data.js impact_data.js publications.json impact_metrics.json crossref_cache.json wos_fixed_metadata.json
-          git add preview_all.html 凡科_模块*.html 2>/dev/null || true
+          git add preview_all.html 凡科_*.html 2>/dev/null || true
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore(data): 定期自动同步王小治课题组学术成果与引证数据 [skip ci]" && git push origin HEAD)
 
       - name: 镜像推送至 Gitee (国内毫秒级极速 CDN)
