@@ -1,6 +1,6 @@
 /**
  * 王小治教授课题组 · 学术影响力大屏核心数据 (模块一)
- * 数据源自: Clarivate Web of Science 核心合集 | 更新时间: 2026年10月23日
+ * 数据源自: Clarivate Web of Science 核心合集 | 更新时间: 2026年10月24日
  */
 window.WXZ_IMPACT = {
   "scholar": {
@@ -12,7 +12,7 @@ window.WXZ_IMPACT = {
   },
   "stats": {
     "total_publications": 202,
-    "total_citations": 6687,
+    "total_citations": 6689,
     "h_index": 44,
     "avg_citations_per_paper": 33.1,
     "featured_count": 11,
@@ -53,7 +53,7 @@ window.WXZ_IMPACT = {
     {
       "year": 2022,
       "publications": 25,
-      "citations": 1431
+      "citations": 1432
     },
     {
       "year": 2023,
@@ -73,7 +73,7 @@ window.WXZ_IMPACT = {
     {
       "year": 2026,
       "publications": 11,
-      "citations": 64
+      "citations": 65
     }
   ],
   "topics_distribution": {

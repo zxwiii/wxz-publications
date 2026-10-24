@@ -8,7 +8,7 @@
   },
   "stats": {
     "total_publications": 202,
-    "total_citations": 6687,
+    "total_citations": 6689,
     "h_index": 44,
     "avg_citations_per_paper": 33.1,
     "featured_count": 11,
@@ -49,7 +49,7 @@
     {
       "year": 2022,
       "publications": 25,
-      "citations": 1431
+      "citations": 1432
     },
     {
       "year": 2023,
@@ -69,7 +69,7 @@
     {
       "year": 2026,
       "publications": 11,
-      "citations": 64
+      "citations": 65
     }
   ],
   "topics_distribution": {
