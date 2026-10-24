@@ -31,6 +31,10 @@ if os.path.exists(metrics_path):
     except Exception:
         pass
 
+if not os.path.exists(m1_path) or not os.path.exists(m2_path):
+    print("ℹ 提示: 未检测到本地 HTML 模板文件 (云端环境无需构建预览)，安全跳过预览构建。")
+    sys.exit(0)
+
 with open(m1_path, "r", encoding="utf-8") as f:
     m1 = f.read()
 
