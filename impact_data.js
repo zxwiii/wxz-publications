@@ -12,7 +12,7 @@ window.WXZ_IMPACT = {
   },
   "stats": {
     "total_publications": 202,
-    "total_citations": 6689,
+    "total_citations": 6693,
     "h_index": 44,
     "avg_citations_per_paper": 33.1,
     "featured_count": 12,
@@ -38,7 +38,7 @@ window.WXZ_IMPACT = {
     {
       "year": 2019,
       "publications": 6,
-      "citations": 765
+      "citations": 766
     },
     {
       "year": 2020,
@@ -63,12 +63,12 @@ window.WXZ_IMPACT = {
     {
       "year": 2024,
       "publications": 38,
-      "citations": 1026
+      "citations": 1028
     },
     {
       "year": 2025,
       "publications": 51,
-      "citations": 518
+      "citations": 519
     },
     {
       "year": 2026,
