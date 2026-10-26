@@ -12,9 +12,9 @@ window.WXZ_IMPACT = {
   },
   "stats": {
     "total_publications": 202,
-    "total_citations": 6693,
+    "total_citations": 6704,
     "h_index": 44,
-    "avg_citations_per_paper": 33.1,
+    "avg_citations_per_paper": 33.2,
     "featured_count": 12,
     "esi_count": 7,
     "role_count": 113
@@ -53,7 +53,7 @@ window.WXZ_IMPACT = {
     {
       "year": 2022,
       "publications": 25,
-      "citations": 1432
+      "citations": 1435
     },
     {
       "year": 2023,
@@ -63,17 +63,17 @@ window.WXZ_IMPACT = {
     {
       "year": 2024,
       "publications": 38,
-      "citations": 1028
+      "citations": 1032
     },
     {
       "year": 2025,
       "publications": 51,
-      "citations": 519
+      "citations": 521
     },
     {
       "year": 2026,
       "publications": 11,
-      "citations": 65
+      "citations": 67
     }
   ],
   "topics_distribution": {
@@ -111,8 +111,8 @@ window.WXZ_IMPACT = {
       "count": 2
     },
     {
-      "abbr": "ACB",
-      "name": "Applied Catalysis B: Environment and Energy",
+      "abbr": "Appl. Catal. B",
+      "name": "Applied Catalysis B",
       "count": 3
     },
     {

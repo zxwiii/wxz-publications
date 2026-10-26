@@ -54,7 +54,7 @@ TOP_JOURNALS_STRICT = [
     {"abbr": "WR", "pattern": r"^water\s+research$", "name": "Water Research", "weight": 90, "is_top": True},
     {"abbr": "ACS Nano", "pattern": r"^acs\s+nano$", "name": "ACS Nano", "weight": 85, "is_top": True},
     {"abbr": "Adv Sci", "pattern": r"^advanced\s+science$", "name": "Advanced Science", "weight": 80, "is_top": True},
-    {"abbr": "ACB", "pattern": r"applied\s+catalysis\s+b", "name": "Applied Catalysis B: Environment and Energy", "weight": 70, "is_top": True},
+    {"abbr": "Appl. Catal. B", "pattern": r"applied\s+catalysis\s+b", "name": "Applied Catalysis B", "weight": 70, "is_top": True},
     {"abbr": "CEJ", "pattern": r"^chemical\s+engineering\s+journal$", "name": "Chemical Engineering Journal", "weight": 50, "is_top": False},
     {"abbr": "JHM", "pattern": r"journal\s+of\s+hazardous\s+materials", "name": "Journal of Hazardous Materials", "weight": 40, "is_top": False},
     {"abbr": "ACS Catal", "pattern": r"acs\s+catalysis", "name": "ACS Catalysis", "weight": 35, "is_top": False},
@@ -164,12 +164,28 @@ def to_title_case(s):
             titled.append(w.capitalize())
     return " ".join(titled)
 
-def format_journal_name(raw_name):
-    """将期刊名格式化为国际标准学术期刊名称"""
+def format_journal_name(raw_name, publish_year=None, volume=None):
+    """将期刊名格式化为国际标准学术期刊名称（含 Applied Catalysis B 历史官方更名学术精准还原）"""
     if not raw_name:
         return ""
     cleaned = clean_html_tags(raw_name).strip()
     low = cleaned.lower()
+
+    # 特殊学术精准还原处理 Applied Catalysis B: 2024 年第 345 卷起正式更名为 Environment and Energy
+    if re.search(r"applied\s+catalysis\s+b", low):
+        v_match = re.search(r"\d+", str(volume)) if volume else None
+        v_num = int(v_match.group()) if v_match else 0
+        try:
+            y_num = int(publish_year) if publish_year else 0
+        except Exception:
+            y_num = 0
+
+        # 更名后：2024 年第 345 卷及以后（或 2025、2026 年）
+        if v_num >= 345 or y_num >= 2025:
+            return "Applied Catalysis B: Environment and Energy"
+        # 更名前：2024 年第 344 卷及以前（2013-2024 年）
+        else:
+            return "Applied Catalysis B: Environmental"
     exact_map = {
         "acs nano": "ACS Nano",
         "acs catalysis": "ACS Catalysis",
@@ -403,7 +419,7 @@ def rebuild_from_local(selected_dois, selected_title_norms, esi_dois, esi_title_
     for p in pubs:
         doi_lower = clean_doi_str(p.get("doi") or "")
         title_norm = normalize_title(p.get("title") or "")
-        journal_clean = format_journal_name(p.get("journal") or "")
+        journal_clean = format_journal_name(p.get("journal") or "", p.get("year"), p.get("volume"))
         p["journal"] = journal_clean
 
         top_j_info = None
@@ -605,7 +621,7 @@ def main():
                     if "pages" in v:
                         v["pages"] = parse_clean_pages(v.get("pages"))
                     if "journal" in v:
-                        v["journal"] = format_journal_name(v.get("journal"))
+                        v["journal"] = format_journal_name(v.get("journal"), v.get("year"), v.get("volume"))
             print(f"✓ 载入历史固化元数据库: {len(fixed_meta)} 条记录 (脏数据已清洗)")
         except Exception:
             fixed_meta = {}
@@ -706,7 +722,6 @@ def main():
         # 期刊与卷期页码清洗
         source_info = doc.get("source", {})
         journal_raw = source_info.get("sourceTitle", "")
-        journal_clean = format_journal_name(journal_raw)
 
         pub_year = source_info.get("publishYear", 2026)
         try:
@@ -715,6 +730,7 @@ def main():
             pub_year = 2026
 
         vol = str(source_info.get("volume", "")).strip()
+        journal_clean = format_journal_name(journal_raw, pub_year, vol)
         iss = str(source_info.get("issue", "")).strip()
         # 使用专业函数提取规范页码或文章号
         pages_str = parse_clean_pages(source_info.get("pages"), source_info.get("articleNumber"))
@@ -767,7 +783,8 @@ def main():
             pub_id = fixed_item.get("id")
             title_clean = fixed_item.get("title", title_clean)
             authors_str = fixed_item.get("authors", authors_str)
-            journal_clean = format_journal_name(fixed_item.get("journal", journal_clean))
+            journal_clean = format_journal_name(fixed_item.get("journal", journal_clean), fixed_item.get("year", pub_year), fixed_item.get("volume", vol))
+            fixed_item["journal"] = journal_clean
             vol = fixed_item.get("volume", vol)
             iss = fixed_item.get("issue", iss)
             pages_str = parse_clean_pages(fixed_item.get("pages"), source_info.get("articleNumber"))
