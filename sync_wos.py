@@ -18,7 +18,7 @@ import time
 import random
 import urllib.request
 import urllib.parse
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 if sys.platform.startswith('win'):
     try:
@@ -508,7 +508,7 @@ def rebuild_from_local(selected_dois, selected_title_norms, esi_dois, esi_title_
         "year_trend": trend_data,
         "topics_distribution": topic_distribution,
         "top_journals": top_journals_stat,
-        "updated_at": "定期自动更新 (每月2日/16日)",
+        "updated_at": now_str,
         "source": "Clarivate Web of Science (核心合集)"
     }
 
@@ -607,8 +607,9 @@ def main():
         except Exception:
             fixed_meta = {}
 
-    # 4. 双 Key 抓取 WoS 官方数据
-    now_str = datetime.now().strftime("%Y年%m月%d日")
+    # 4. 双 Key 抓取 WoS 官方数据 (严格采用北京时间，避免 GitHub Actions 云端 UTC 零时区导致日期倒退)
+    beijing_tz = timezone(timedelta(hours=8))
+    now_str = datetime.now(beijing_tz).strftime("%Y年%m月%d日")
     all_hits = fetch_wos_documents_multi_key(api_keys)
 
     if not all_hits:
@@ -921,7 +922,7 @@ def main():
         "year_trend": trend_data,
         "topics_distribution": topic_distribution,
         "top_journals": top_journals_stat,
-        "updated_at": "定期自动更新 (每月2日/16日)",
+        "updated_at": now_str,
         "source": "Clarivate Web of Science (核心合集)"
     }
 
