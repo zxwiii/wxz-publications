@@ -300,6 +300,9 @@ def update_fanke_module1_static(impact_data):
         content = re.sub(r'<div class="wxz-stat-num" id="wxz-stat-cites">[^<]+<span class="wxz-plus">\+</span></div>', f'<div class="wxz-stat-num" id="wxz-stat-cites">{cites:,}<span class="wxz-plus">+</span></div>', content)
         content = re.sub(r'<div class="wxz-stat-num" id="wxz-stat-hindex">\d+</div>', f'<div class="wxz-stat-num" id="wxz-stat-hindex">{h_idx}</div>', content)
         content = re.sub(r'<div class="wxz-stat-num" id="wxz-stat-pubs">\d+</div>', f'<div class="wxz-stat-num" id="wxz-stat-pubs">{pubs}</div>', content)
+        updated_at = impact_data.get("updated_at", "")
+        if updated_at:
+            content = re.sub(r'<strong id="wxz-impact-date"[^>]*>.*?</strong>', f'<strong id="wxz-impact-date" style="color:#0f172a;margin-left:3px;">{updated_at}</strong>', content)
 
         with open(m1_file, "w", encoding="utf-8") as f:
             f.write(content)
