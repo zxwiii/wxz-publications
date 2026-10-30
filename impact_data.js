@@ -1,6 +1,6 @@
 /**
  * 王小治教授课题组 · 学术影响力大屏核心数据 (模块一)
- * 数据源自: Clarivate Web of Science 核心合集 | 更新时间: 2026年10月30日
+ * 数据源自: Clarivate Web of Science 核心合集 | 更新时间: 2026年10月31日
  */
 window.WXZ_IMPACT = {
   "scholar": {
@@ -141,6 +141,6 @@ window.WXZ_IMPACT = {
       "count": 2
     }
   ],
-  "updated_at": "2026年10月30日",
+  "updated_at": "2026年10月31日",
   "source": "Clarivate Web of Science (核心合集)"
 };
