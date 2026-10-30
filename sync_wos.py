@@ -751,8 +751,8 @@ def main():
             is_wxz = False
             if r_id == RESEARCHER_ID:
                 is_wxz = True
-            elif re.search(r"wang\s*,?\s*x(iaozhi|\.?\s*z\.?)", disp.lower()):
-                if not re.search(r"xiaowei|xian|xiao(?!zhi)", disp.lower()):
+            elif re.search(r"wang\s*,?\s*x(iao-?zhi|\.?\s*z\.?|\b)", disp.lower()):
+                if not re.search(r"xiaowei|xian|xiao(?!-?zhi\b)", disp.lower()):
                     is_wxz = True
 
             if is_wxz and idx == 0:
