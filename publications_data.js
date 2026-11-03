@@ -1,6 +1,6 @@
 /**
  * 王小治教授课题组 · 论文成果展示与多维检索核心数据 (模块二)
- * 成果总量: 202 篇 | 更新时间: 2026年11月03日
+ * 成果总量: 202 篇 | 更新时间: 2026年11月04日
  */
 window.WXZ_PUBLICATIONS = [
   {
@@ -779,7 +779,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "123174",
     "doi": "10.1016/j.watres.2025.123174",
-    "citations": 17,
+    "citations": 18,
     "is_featured": true,
     "is_esi": false,
     "is_first": false,
@@ -848,7 +848,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "138149",
     "doi": "10.1016/j.colsurfa.2025.138149",
-    "citations": 1,
+    "citations": 2,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -1337,7 +1337,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "129535",
     "doi": "10.1016/j.seppur.2024.129535",
-    "citations": 75,
+    "citations": 76,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -2207,7 +2207,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "40",
     "pages": "17703-17716",
     "doi": "10.1021/acs.est.4c07961",
-    "citations": 29,
+    "citations": 30,
     "is_featured": true,
     "is_esi": false,
     "is_first": false,
@@ -2343,7 +2343,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "36",
     "pages": "12280-12285",
     "doi": "10.1039/d3tc02198j",
-    "citations": 14,
+    "citations": 15,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -3381,7 +3381,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "17",
     "pages": "12734-12744",
     "doi": "10.1021/acs.est.2c04062",
-    "citations": 69,
+    "citations": 70,
     "is_featured": true,
     "is_esi": false,
     "is_first": false,
@@ -4006,7 +4006,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "124713",
     "doi": "10.1016/j.chemosphere.2019.124713",
-    "citations": 106,
+    "citations": 107,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -4120,7 +4120,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "297-302",
     "doi": "10.1016/j.apsusc.2018.09.010",
-    "citations": 51,
+    "citations": 52,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
