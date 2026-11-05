@@ -1,6 +1,6 @@
 /**
  * 王小治教授课题组 · 论文成果展示与多维检索核心数据 (模块二)
- * 成果总量: 202 篇 | 更新时间: 2026年11月05日
+ * 成果总量: 202 篇 | 更新时间: 2026年11月06日
  */
 window.WXZ_PUBLICATIONS = [
   {
@@ -1656,7 +1656,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "20",
     "pages": "9307-9314",
     "doi": "10.1021/acs.inorgchem.4c01144",
-    "citations": 18,
+    "citations": 19,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -2684,7 +2684,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "109648",
     "doi": "10.1016/j.diamond.2022.109648",
-    "citations": 35,
+    "citations": 36,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -3543,7 +3543,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "10",
     "pages": "6158-6167",
     "doi": "10.1111/jace.18539",
-    "citations": 59,
+    "citations": 60,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -4096,7 +4096,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "19",
     "pages": "16569-16576",
     "doi": "10.1021/acssuschemeng.9b03885",
-    "citations": 122,
+    "citations": 123,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
