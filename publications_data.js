@@ -1,6 +1,6 @@
 /**
  * 王小治教授课题组 · 论文成果展示与多维检索核心数据 (模块二)
- * 成果总量: 202 篇 | 更新时间: 2026年11月07日
+ * 成果总量: 202 篇 | 更新时间: 2026年11月08日
  */
 window.WXZ_PUBLICATIONS = [
   {
@@ -125,7 +125,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "123243",
     "doi": "10.1016/j.envres.2025.123243",
-    "citations": 3,
+    "citations": 4,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -1104,7 +1104,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "44",
     "pages": "e202515736",
     "doi": "10.1002/anie.202515736",
-    "citations": 27,
+    "citations": 28,
     "is_featured": true,
     "is_esi": false,
     "is_first": false,
@@ -2230,7 +2230,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "154701",
     "doi": "10.1016/j.cej.2024.154701",
-    "citations": 41,
+    "citations": 42,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -2964,7 +2964,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "164521",
     "doi": "10.1016/j.scitotenv.2023.164521",
-    "citations": 27,
+    "citations": 28,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -3196,7 +3196,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "121530",
     "doi": "10.1016/j.seppur.2022.121530",
-    "citations": 28,
+    "citations": 29,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -3381,7 +3381,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "17",
     "pages": "12734-12744",
     "doi": "10.1021/acs.est.2c04062",
-    "citations": 70,
+    "citations": 71,
     "is_featured": true,
     "is_esi": false,
     "is_first": false,
