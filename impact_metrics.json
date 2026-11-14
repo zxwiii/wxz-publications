@@ -8,9 +8,9 @@
   },
   "stats": {
     "total_publications": 202,
-    "total_citations": 6794,
+    "total_citations": 6798,
     "h_index": 44,
-    "avg_citations_per_paper": 33.6,
+    "avg_citations_per_paper": 33.7,
     "featured_count": 12,
     "esi_count": 7,
     "role_count": 113
@@ -24,7 +24,7 @@
     {
       "year": 2017,
       "publications": 7,
-      "citations": 481
+      "citations": 482
     },
     {
       "year": 2018,
@@ -44,7 +44,7 @@
     {
       "year": 2021,
       "publications": 14,
-      "citations": 787
+      "citations": 788
     },
     {
       "year": 2022,
@@ -59,7 +59,7 @@
     {
       "year": 2024,
       "publications": 38,
-      "citations": 1050
+      "citations": 1052
     },
     {
       "year": 2025,
@@ -137,6 +137,6 @@
       "count": 2
     }
   ],
-  "updated_at": "2026年11月14日",
+  "updated_at": "2026年11月15日",
   "source": "Clarivate Web of Science (核心合集)"
 }
