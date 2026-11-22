@@ -1,6 +1,6 @@
 /**
  * 王小治教授课题组 · 论文成果展示与多维检索核心数据 (模块二)
- * 成果总量: 202 篇 | 更新时间: 2026年11月22日
+ * 成果总量: 202 篇 | 更新时间: 2026年11月23日
  */
 window.WXZ_PUBLICATIONS = [
   {
@@ -329,7 +329,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "122806",
     "doi": "10.1016/j.renene.2025.122806",
-    "citations": 5,
+    "citations": 6,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -779,7 +779,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "123174",
     "doi": "10.1016/j.watres.2025.123174",
-    "citations": 18,
+    "citations": 19,
     "is_featured": true,
     "is_esi": false,
     "is_first": false,
@@ -1289,7 +1289,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "106382",
     "doi": "10.1016/j.still.2024.106382",
-    "citations": 18,
+    "citations": 19,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -1359,7 +1359,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "168110",
     "doi": "10.1016/j.cej.2025.168110",
-    "citations": 5,
+    "citations": 6,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -1725,7 +1725,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "1-2",
     "pages": "811-825",
     "doi": "10.1007/s11104-024-06712-9",
-    "citations": 20,
+    "citations": 21,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -2134,7 +2134,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "1",
     "pages": "26",
     "doi": "10.1007/s42773-024-00318-1",
-    "citations": 28,
+    "citations": 29,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -2159,7 +2159,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "135402",
     "doi": "10.1016/j.jhazmat.2024.135402",
-    "citations": 31,
+    "citations": 32,
     "is_featured": false,
     "is_esi": false,
     "is_first": false,
@@ -3173,7 +3173,7 @@ window.WXZ_PUBLICATIONS = [
     "issue": "",
     "pages": "240-248",
     "doi": "10.1016/j.jmst.2021.12.006",
-    "citations": 233,
+    "citations": 234,
     "is_featured": false,
     "is_esi": true,
     "is_first": false,
